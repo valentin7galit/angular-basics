@@ -1,58 +1,40 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+
+export interface Post {
+  title: string
+  text: string
+  id?: number
+}
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  posts: Post[] = [
+    {title: 'Хочу выучить Angular компоненты', text: 'Я все еще учу компоненты', id: 1},
+    // {title: 'Следующий блок', text: 'Будет про директивы и еще про пайпы', id: 2}
+  ]
 
-  // title = 'Dynamic title'
-  // number = 42
-  // arr = [1, 2, 3]
-  // obj = { a: 1, b: {c: 2} }
-  // inputValue = ''
-  // img = 'https://cdn.freebiesupply.com/logos/large/2x/react-1-logo-png-transparent.png'
+  ngOnInit(): void {
+    setTimeout(() => {
+      console.log('Timeout')
+      this.posts[0] = {
+        title: 'changed',
+        text: 'changed 2',
+        id: 33
+      }
+    }, 5000)
+  }
 
-  // constructor() {
-  //   // setTimeout(() => {
-  //   //   this.img = 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Angular_full_color_logo.svg/2048px-Angular_full_color_logo.svg.png'
-  //   // }, 5000)
-  // }
-  //
-  // onInput(event: KeyboardEvent) {
-  //   this.inputValue = (<HTMLInputElement>event.target).value;
-  // }
-  // onBlur(str: string) {
-  //   this.inputValue = str;
-  // }
-  // onClick() {
-  //   console.log('Click!');
-  // }
+  updatePosts(post: Post) {
+    this.posts.unshift(post)
+    // console.log('Post', post)
+  }
 
-  // title: "Initial"
-  // onInput(event: any) {
-  //   this.title = event.target.value
-  // }
-
-  // backgroundToggle = false
-  // toggle :any = false
-
-//  15
-//   arr = [1, 1, 2, 3, 5, 8, 13]
-//   objs = [
-//     {title: 'Post 1', author: 'Valentin', comments: [
-//       {name: 'Max', text: 'lorem 1'},
-//       {name: 'Max', text: 'lorem 2'},
-//       {name: 'Max', text: 'lorem 3'},
-//     ]},
-//     {title: 'Post 2', author: 'Valentin 2', comments: [
-//         {name: 'Max 2', text: 'lorem 1'},
-//         {name: 'Max 2', text: 'lorem 2'},
-//         {name: 'Max 2', text: 'lorem 3'},
-//       ]},
-//   ]
-
-//  16
-  now: Date = new Date()
+  removePost(id: number) {
+    console.log('Id to remove', id)
+    this.posts = this.posts.filter(p => p.id !== id)
+  }
 }

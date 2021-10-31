@@ -1,82 +1,27 @@
-<h1>Hello Angular Word!</h1>
+<div class="container">
+  <h1>Angular Components</h1>
 
-<!--<p>{{ title }}</p>-->
+  <h2>Subheader</h2>
 
-<!--<p><strong>{{number - 2}}</strong></p>-->
-<!--<p><strong>{{arr}}</strong></p>-->
-<!--<p><strong>{{obj.a}}</strong></p>-->
+  <app-post-form
+    (onAdd)="updatePosts($event)"
+  ></app-post-form>
 
-<!--<img [src]="img" alt="" style="height: 100px; width: 100px">-->
-<!--<button (click)="onClick()">Click me!</button>-->
-<!--<input-->
-<!--  type="text"-->
-<!--  (keyup.enter)="onInput($event)"-->
-<!--  (blur)="onBlur(myInput.value)"-->
-<!--  #myInput-->
-<!--&gt;-->
-<!--<p><sctrong>{{inputValue}}</sctrong></p>-->
+  <hr />
 
-<!--<hr>-->
-<!--<app-post></app-post>-->
-<!--<hr>-->
-<!--<app-post4></app-post4>-->
+  <app-post
+    *ngFor="let p of posts"
+    [post]="p"
+    (onRemove)="removePost($event)"
+  >
+    <div #info>
+      <small *ngIf="p.text.length > 10; else short">Пост длинный</small>
+      <ng-template #short>
+        <small>Пост короткий</small>
+      </ng-template>
+    </div>
+  </app-post>
 
-<!--<input type="text" [(ngModel)]="title">-->
-<!--<p>{{title}}</p>-->
 
-<!--<button (click)="backgroundToggle = !backgroundToggle">Toggle</button>-->
-<!--<div [ngStyle]="{-->
-<!--  width: '200px',-->
-<!--  height: '200px',-->
-<!--  borderRadius: '1px solid #ccc',-->
-<!--  background: backgroundToggle ? 'red' : 'blue'-->
-<!--}"></div>-->
+</div>
 
-<!--<p [ngClass]="{-->
-<!--  red: backgroundToggle,-->
-<!--  blue: !backgroundToggle-->
-<!--}" ]>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, quas!</p>-->
-<!--<p-->
-<!--  [class.blue]="!backgroundToggle"-->
-<!--  [class.red]="backgroundToggle"-->
-<!--&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit. At, rem?</p>-->
-
-<!--13-->
-<!--<button (click)="toggle = !toggle">Toggle</button>-->
-<!--<p *ngIf="toggle; else blueP" class="red">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, non?</p>-->
-<!--<ng-template #blueP>-->
-<!--  <p class="blue">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim, reprehenderit?</p>-->
-<!--</ng-template>-->
-
-<!--14-->
-<!--<button (click)="toggle = 111">Set 11</button>-->
-<!--<div [ngClass]="toggle">-->
-<!--  <p *ngSwitchCase="true" class="red">Lorem.</p>-->
-<!--  <p *ngSwitchCase="false">Lorem ipsum dolor.</p>-->
-<!--  <p *ngSwitchDefault>Lorem ipsum dolor.</p>-->
-<!--</div>-->
-
-<!--15-->
-<!--<ul>-->
-<!--  <li *ngFor="let n of arr; let index = index">-->
-<!--    {{index + 1}} <strong>{{n}}</strong>-->
-<!--  </li>-->
-<!--</ul>-->
-<!--<ul style="list-style: none">-->
-<!--  <li *ngFor="let post of objs">-->
-<!--    <p>{{post.title}} <b>{{post.author}}</b></p>-->
-<!--    <ul>-->
-<!--      <li *ngFor="let comment of post.comments">-->
-<!--        <div>-->
-<!--          <small>{{comment.name}}</small>-->
-<!--          <p>{{comment.text}}</p>-->
-<!--        </div>-->
-<!--      </li>-->
-<!--    </ul>-->
-<!--  </li>-->
-<!--</ul>-->
-
-<!--16-pipes-->
-<p>
-  {{ now | date: 'long' | uppercase | lowercase}}
-</p>
