@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core'
-import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms'
-import {MyValidators} from './my.validators'
+import {Todo, TodosService} from './todos.service'
 
 @Component({
   selector: 'app-root',
@@ -8,51 +7,53 @@ import {MyValidators} from './my.validators'
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  form!: FormGroup
+
+  todos: Todo[] = []
+  loading = false
+  todoTitle = ''
+  error = ''
+
+  constructor(private todosService: TodosService) {}
 
   ngOnInit() {
-    this.form = new FormGroup({
-      email: new FormControl('', [
-        Validators.email,
-        Validators.required,
-      ]),
-      password: new FormControl(null, [
-        Validators.required,
-        Validators.minLength(6)
-      ]),
-      address: new FormGroup({
-        country: new FormControl('by'),
-        city: new FormControl('Минск', Validators.required)
-      }),
-      skills: new FormArray([])
+    this.fetchTodos()
+  }
+
+  addTodo() {
+    if (!this.todoTitle.trim()) {
+      return
+    }
+
+    this.todosService.addTodo({
+      title: this.todoTitle,
+      completed: false
+    }).subscribe(todo => {
+      this.todos.push(todo)
+      this.todoTitle = ''
     })
   }
 
-  submit() {
-    if (this.form.valid) {
-      const formData = {...this.form.value}
-
-      this.form.reset()
-    }
+  fetchTodos() {
+    this.loading = true
+    this.todosService.fetchTodos()
+      .subscribe((todos: Todo[]) => {
+        this.todos = todos
+        this.loading = false
+      }, error => {
+        this.error = error.message
+      })
   }
 
-  setCapital() {
-    const cityMap: any = {
-      ru: 'Москва',
-      ua: 'Киев',
-      by: 'Минск'
-    }
-
-    const cityKey = this.form.get('address')?.get('country')?.value
-    const city = cityMap[cityKey]
-
-    this.form.patchValue({address: {city}})
+  removeTodo(id: number) {
+    this.todosService.removeTodo(id)
+      .subscribe(() => {
+        this.todos = this.todos.filter(t => t.id !== id)
+      })
   }
 
-  addSkill() {
-    const control = new FormControl('', Validators.required);
-    // (<FormArray>this.form.get('skills'))
-    (this.form.get('skills') as FormArray).push(control)
+  completeTodo(id: number | undefined) {
+    this.todosService.completeTodo(id).subscribe(todo => {
+      this.todos.find(t => t.id === todo.id).completed = true
+    })
   }
 }
-
