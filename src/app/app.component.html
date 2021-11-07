@@ -1,22 +1,28 @@
 <div class="container">
-  <h1>Angular Pipes</h1>
+  <h1>Angular Services</h1>
 
-  <button class="btn" (click)="searchField = 'title'">Title</button>
-  <button class="btn" (click)="searchField = 'text'">Text</button>
+
+  <div class="card">
+    <h2>App Counter: {{appCounterService.counter}}</h2>
+
+    <button class="btn" (click)="appCounterService.increase()">+</button>
+    <button class="btn" (click)="appCounterService.decrease()">-</button>
+
+  </div>
+
+
+  <div class="card">
+    <h2>Local Counter: {{localCounterService.counter}}</h2>
+
+    <button class="btn" (click)="localCounterService.increase()">+</button>
+    <button class="btn" (click)="localCounterService.decrease()">-</button>
+
+  </div>
 
   <hr>
 
-  <button class="btn" (click)="addPost()">Добавить новый пост</button>
-
-  <input type="text" [(ngModel)]="search">
-
-  <div
-    *ngFor="let post of posts | filter:search:searchField"
-    class="card"
-  >
-    <h2>{{post.title}}</h2>
-    <p>{{post.text}}</p>
-  </div>
+  <app-counter></app-counter>
 </div>
+
 
 
