@@ -1,35 +1,22 @@
 <div class="container">
-  <h1>Angular Directives</h1>
+  <h1>Angular Pipes</h1>
 
+  <button class="btn" (click)="searchField = 'title'">Title</button>
+  <button class="btn" (click)="searchField = 'text'">Text</button>
 
-  <p [appStyle]="'red'" [dStyles]="{border: '1px solid blue', borderRadius: '5px'}">
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, laborum!
-  </p>
+  <hr>
 
-  <p [appStyle]="'blue'" [dStyles]="{border: '1px solid red', borderRadius: '15px'}">
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, laborum!
-  </p>
+  <button class="btn" (click)="addPost()">Добавить новый пост</button>
 
-  <button class="btn" (click)="isVisible = !isVisible">Toggle</button>
+  <input type="text" [(ngModel)]="search">
 
-  <!--  <div *ngIf="isVisible" class="wrap">-->
-  <!--    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur cum ea et ex hic incidunt itaque maiores quos sint veritatis!</p>-->
-  <!--  </div>-->
-
-  <!--  <ng-template [ngIf]="isVisible">-->
-  <!--    <div class="wrap">-->
-  <!--      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur cum ea et ex hic incidunt itaque maiores quos sint veritatis!</p>-->
-  <!--    </div>-->
-  <!--  </ng-template>-->
-
-  <!--  <div class="wrap" *appIfnot="!isVisible">-->
-  <!--    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur cum ea et ex hic incidunt itaque maiores quos sint veritatis!</p>-->
-  <!--  </div>-->
-
-  <ng-template [appIfnot]="!isVisible">
-    <div class="wrap">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur cum ea et ex hic incidunt itaque maiores quos sint veritatis!</p>
-    </div>
-  </ng-template>
+  <div
+    *ngFor="let post of posts | filter:search:searchField"
+    class="card"
+  >
+    <h2>{{post.title}}</h2>
+    <p>{{post.text}}</p>
+  </div>
 </div>
+
 
